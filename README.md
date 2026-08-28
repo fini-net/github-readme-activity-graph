@@ -33,6 +33,12 @@ Please refer to the updated link [here](#how-to-use)
     - [First Method](#first-method)
     - [Second Method](#second-method)
     - [Finally](#finally)
+- [Self-hosting on DigitalOcean App Platform](#self-hosting-on-digitalocean-app-platform)
+    - [Prerequisites](#prerequisites)
+    - [Deploy](#deploy)
+    - [Set the GitHub token](#set-the-github-token)
+    - [Point a custom domain (optional)](#point-a-custom-domain-optional)
+    - [Updating the deployment](#updating-the-deployment)
 - [Contributing](#contributing)
 - [Core Team 💻](#core-team-)
 - [Contributors ✨](#contributors-)
@@ -205,6 +211,60 @@ Now just add the following to your profile readme and you're good to go.
 ```
 
 </details>
+
+## Self-hosting on DigitalOcean App Platform
+
+This fork ships a [Dockerfile](./Dockerfile) and an [App Platform spec](./.do/app.yaml) so the service can run as a container on DigitalOcean (or any other container host — podman, k8s, fly.io, etc.) instead of depending on the upstream Vercel deployment. The upstream deployment is currently returning HTTP 402 because the maintainer's account is billing-locked ([Ashutosh00710#257](https://github.com/Ashutosh00710/github-readme-activity-graph/issues/257), [Ashutosh00710#259](https://github.com/Ashutosh00710/github-readme-activity-graph/issues/259)). See [chicks-net/www-chicks-net#371](https://github.com/chicks-net/www-chicks-net/issues/371) for the full rationale.
+
+The app is a plain Express 5 server (`src/main.ts`) with no Vercel-specific runtime APIs, so it runs unmodified as a long-running Node process inside the container.
+
+### Prerequisites
+
+- A [DigitalOcean](https://cloud.digitalocean.com/) account
+- [`doctl`](https://docs.digitalocean.com/reference/doctl/) installed and authenticated (`doctl auth init`)
+- A [GitHub Personal Access Token](https://github.com/settings/tokens) with `read:user` scope (the service uses it as a Bearer token against `api.github.com/graphql`; see `src/fetcher.ts:46`)
+
+### Deploy
+
+```sh
+doctl apps create --spec .do/app.yaml
+```
+
+App Platform builds the image from the repo's `Dockerfile`, starts one `apps-s-1vcpu-0.5gb` instance ($5/mo, 512 MiB) in `nyc`, and assigns a public URL of the form `activity-graph-<random>.ondigitalocean.app`. Pushes to the `deploy` branch redeploy automatically (`deploy_on_push: true`).
+
+At this point the app is live but returns the graceful "Can't fetch any contribution" error-graph SVG because `TOKEN` is empty.
+
+### Set the GitHub token
+
+Set the `TOKEN` secret via `doctl` (the spec declares it as `type: SECRET`, so the value is encrypted at rest and never appears in `git`):
+
+```sh
+APP_ID=$(doctl apps list --format ID --no-header | head -n1)
+doctl apps update "$APP_ID" --spec .do/app.yaml \
+  --set-env TOKEN=<your-github-pat>
+```
+
+Or via the App Platform dashboard: **Settings → App-Level Environment Variables → Add → `TOKEN` = `<your-pat>`, type Secret**.
+
+After the redeploy, `GET https://activity-graph-<random>.ondigitalocean.app/graph?username=<your-name>&theme=github-compact` returns a real contribution-graph SVG.
+
+### Point a custom domain (optional)
+
+The spec intentionally omits a `domains:` block so first-deploy Just Works. To add `activity-graph.chicks.net` (or similar) once DNS is ready, add to `.do/app.yaml`:
+
+```yaml
+domains:
+- domain: activity-graph.chicks.net
+  type: PRIMARY
+```
+
+then add a CNAME on the chicks.net side pointing at the `.ondigitalocean.app` hostname and run `doctl apps update "$APP_ID" --spec .do/app.yaml`.
+
+### Updating the deployment
+
+- **Code change on `deploy` branch:** App Platform redeploys automatically on push (`deploy_on_push: true`).
+- **Spec change:** `doctl apps update "$APP_ID" --spec .do/app.yaml`.
+- **Spec validation in CI:** the [Validate App Spec](./.github/workflows/validate-app-spec.yml) workflow checks `.do/app.yaml` on PRs. Without a `DIGITALOCEAN_ACCESS_TOKEN` repo secret it falls back to a YAML syntax check; with the secret it runs `doctl apps spec validate`.
 
 ## Contributing
 

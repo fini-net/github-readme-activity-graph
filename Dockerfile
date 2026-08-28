@@ -2,18 +2,18 @@
 
 # ----- stage 1: build ---------------------------------------------------------
 # Includes devDependencies because tsc needs @types/* and ts-node to compile.
-# The upstream package-lock.json is out of sync with package.json (upstream
-# CI has been billing-locked since ~2025-05), so `npm ci` fails. Using
-# `npm install --no-audit --no-fund` reconciles the lockfile inside the image
-# without polluting the host. Revisit once upstream fixes #257.
 FROM docker.io/library/node:20-slim AS build
 
 WORKDIR /app
 
 # Install deps first for better layer caching. Copy manifests only.
+# `npm ci` is preferred over `npm install` for reproducible, faster builds.
+# It requires package-lock.json to be in sync with package.json, which was
+# reconciled in this fork (upstream's lockfile was stale due to billing-locked
+# CI — see Ashutosh00710/github-readme-activity-graph#257).
 COPY package.json package-lock.json ./
 
-RUN npm install --no-audit --no-fund
+RUN npm ci --no-audit --no-fund
 
 # Copy source and compile TypeScript -> dist/
 COPY tsconfig.json ./
