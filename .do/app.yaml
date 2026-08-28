@@ -1,0 +1,67 @@
+# DigitalOcean App Platform spec for the activity-graph service.
+#
+# Deploy with:
+#   doctl apps create --spec .do/app.yaml
+# or update an existing app:
+#   doctl apps update <app-id> --spec .do/app.yaml
+#
+# After the first deploy, set the GitHub PAT secret:
+#   doctl apps update <app-id> --spec .do/app.yaml \
+#     --set-env TOKEN=<your-github-pat-with-read:user>
+# or via the App Platform dashboard (Settings > App-Level Environment Variables).
+#
+# The app reads process.env.TOKEN as a Bearer token for the GitHub GraphQL
+# contributions API (src/fetcher.ts:46). Without it, /graph returns a graceful
+# "Can't fetch any contribution" error-graph SVG instead of crashing.
+#
+# References:
+#   - Self-hosting rationale: chicks-net/www-chicks-net#371
+#   - Container build: Dockerfile in repo root (see PR #1)
+#   - Upstream billing-lock context: Ashutosh00710/github-readme-activity-graph#257
+
+name: activity-graph
+region: nyc
+
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
+
+services:
+- name: web
+  github:
+    repo: fini-net/github-readme-activity-graph
+    branch: deploy
+    deploy_on_push: true
+  dockerfile_path: Dockerfile
+  # DO injects PORT=<http_port> into the container env at runtime. The app
+  # reads process.env.PORT || 5100 at src/main.ts:6, so 5100 lines up with
+  # the Dockerfile's EXPOSE and the health_check below.
+  http_port: 5100
+  instance_count: 1
+  # $5/mo, 512 MiB, 1 shared vCPU — adequate for a single Express endpoint
+  # serving one SVG. Smoke test RSS was <30 MB. No manual/auto scaling at
+  # this tier; bump instance_size_slug if that ever matters.
+  instance_size_slug: apps-s-1vcpu-0.5gb
+  health_check:
+    # GET / returns 200 from handlers.getRoot (src/main.ts:13). The
+    # Dockerfile HEALTHCHECK directive is silently ignored under podman's
+    # OCI image format and DO App Platform uses this block instead.
+    http_path: /
+    initial_delay_seconds: 5
+    period_seconds: 30
+    timeout_seconds: 3
+  envs:
+  - key: TOKEN
+    # ⚠ WARNING: Re-applying this spec via `doctl apps update --spec` without
+    # `--set-env TOKEN=<pat>` will reset this to empty and break /graph (it
+    # will return the "Can't fetch" error-graph SVG). Either always pass
+    # `--set-env TOKEN=...` when updating, or set TOKEN via the dashboard
+    # after any spec-only update. See README "Updating the deployment".
+    value: ""
+    type: SECRET
+    scope: RUN_TIME
+
+# No `domains:` block — App Platform auto-assigns
+# activity-graph-<random>.ondigitalocean.app on first deploy. A custom
+# domain (e.g. activity-graph.chicks.net) can be added in a follow-up PR
+# once the DNS CNAME is in place.
