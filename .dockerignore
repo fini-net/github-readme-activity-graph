@@ -1,0 +1,41 @@
+# VCS / metadata
+.git
+.gitignore
+.github
+.vscode
+.idea
+.replit
+replit.nix
+replit.sh
+
+# Node build artifacts / deps
+node_modules
+dist
+coverage
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
+# Env / secrets — never bake into the image
+.env
+.env.*
+!.env.example
+
+# Tests & docs not needed at runtime
+__test__
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+LICENSE
+README.md
+THEMES.md
+
+# Static demo site (served by the upstream Vercel deploy, not by the Express server)
+asset
+index.html
+script.js
+styles.css
+
+# Host artifacts
+.DS_Store
+*.log
