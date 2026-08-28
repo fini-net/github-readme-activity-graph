@@ -239,7 +239,7 @@ At this point the app is live but returns the graceful "Can't fetch any contribu
 Set the `TOKEN` secret via `doctl` (the spec declares it as `type: SECRET`, so the value is encrypted at rest and never appears in `git`):
 
 ```sh
-APP_ID=$(doctl apps list --format ID --no-header | head -n1)
+APP_ID=$(doctl apps list --format ID,Spec.Name --no-header | awk '$2=="activity-graph"{print $1; exit}')
 doctl apps update "$APP_ID" --spec .do/app.yaml \
   --set-env TOKEN=<your-github-pat>
 ```
@@ -258,12 +258,12 @@ domains:
   type: PRIMARY
 ```
 
-then add a CNAME on the chicks.net side pointing at the `.ondigitalocean.app` hostname and run `doctl apps update "$APP_ID" --spec .do/app.yaml`.
+then add a CNAME on the chicks.net side pointing at the `.ondigitalocean.app` hostname and run `doctl apps update "$APP_ID" --spec .do/app.yaml --set-env TOKEN=<your-pat>`.
 
 ### Updating the deployment
 
 - **Code change on `deploy` branch:** App Platform redeploys automatically on push (`deploy_on_push: true`).
-- **Spec change:** `doctl apps update "$APP_ID" --spec .do/app.yaml`.
+- **Spec change:** `doctl apps update "$APP_ID" --spec .do/app.yaml --set-env TOKEN=<your-pat>`. ⚠ Always pass `--set-env TOKEN=...` when updating from the spec — the checked-in spec keeps `TOKEN`'s value empty (to keep the secret out of git), so omitting the flag resets the secret and breaks `/graph` (it returns the "Can't fetch" error-graph SVG) until `TOKEN` is set again. Alternatively, update the spec via the dashboard, which preserves existing secrets.
 - **Spec validation in CI:** the [Validate App Spec](./.github/workflows/validate-app-spec.yml) workflow checks `.do/app.yaml` on PRs. Without a `DIGITALOCEAN_ACCESS_TOKEN` repo secret it falls back to a YAML syntax check; with the secret it runs `doctl apps spec validate`.
 
 ## Contributing

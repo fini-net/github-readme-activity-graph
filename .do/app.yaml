@@ -52,9 +52,11 @@ services:
     timeout_seconds: 3
   envs:
   - key: TOKEN
-    # Set the real value via doctl/dashboard after first deploy; leaving the
-    # spec value empty keeps the secret out of git. DO encrypts SECRET-typed
-    # envs on first submission and stores the encrypted form thereafter.
+    # ⚠ WARNING: Re-applying this spec via `doctl apps update --spec` without
+    # `--set-env TOKEN=<pat>` will reset this to empty and break /graph (it
+    # will return the "Can't fetch" error-graph SVG). Either always pass
+    # `--set-env TOKEN=...` when updating, or set TOKEN via the dashboard
+    # after any spec-only update. See README "Updating the deployment".
     value: ""
     type: SECRET
     scope: RUN_TIME

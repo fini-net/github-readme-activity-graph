@@ -19,8 +19,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: YAML syntax check
-        if: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN == '' }}
+        if: ${{ !secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         run: |
+          python3 -m pip install --user pyyaml
           python3 - <<'PY'
           import sys, yaml
           path = ".do/app.yaml"
@@ -37,11 +38,11 @@ jobs:
           PY
 
       - name: Install doctl
-        if: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN != '' }}
+        if: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Validate App Platform spec
-        if: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN != '' }}
+        if: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         run: doctl apps spec validate .do/app.yaml
