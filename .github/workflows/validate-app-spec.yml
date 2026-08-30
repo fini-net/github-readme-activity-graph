@@ -15,11 +15,15 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    env:
+      # `secrets` is allowed in jobs.<id>.env but not in steps.if, so expose
+      # the token's presence here and branch on env.HAS_DO_TOKEN below.
+      HAS_DO_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
 
       - name: YAML syntax check
-        if: ${{ !secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        if: ${{ env.HAS_DO_TOKEN != 'true' }}
         run: |
           python3 -m pip install --user pyyaml
           python3 - <<'PY'
@@ -38,11 +42,11 @@ jobs:
           PY
 
       - name: Install doctl
-        if: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        if: ${{ env.HAS_DO_TOKEN == 'true' }}
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Validate App Platform spec
-        if: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        if: ${{ env.HAS_DO_TOKEN == 'true' }}
         run: doctl apps spec validate .do/app.yaml
