@@ -5,6 +5,36 @@ import { invalidUserSvg } from './svgs';
 import { selectColors } from './styles/themes';
 import { QueryOption, ParsedQs, UserDetails } from './interfaces/interface';
 
+// Colors are interpolated raw into SVG attributes and a <style> block (see
+// svgs.ts / graphStyle.ts), so anything other than hex digits could break out
+// into markup/CSS and inject a <script> or event handler. Restricted to the
+// hex lengths CSS/SVG actually accept (3, 4, 6, 8) so invalid lengths fall
+// back to the theme default instead of rendering as a broken color.
+const HEX_COLOR = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
+
+function sanitizeColor(value: unknown): string | undefined {
+    return typeof value === 'string' && HEX_COLOR.test(value) ? value : undefined;
+}
+
+// The title is embedded as raw XHTML inside a <foreignObject>, so it must be
+// entity-escaped before use or it can inject a <script> the same way.
+function escapeHtml(value: string): string {
+    return value.replace(/[&<>"']/g, (char) => {
+        switch (char) {
+            case '&':
+                return '&amp;';
+            case '<':
+                return '&lt;';
+            case '>':
+                return '&gt;';
+            case '"':
+                return '&quot;';
+            default:
+                return '&#39;';
+        }
+    });
+}
+
 export class Utilities {
     public username: string;
     constructor(private readonly queryString: ParsedQs) {
@@ -13,30 +43,20 @@ export class Utilities {
 
     private getColors() {
         const theme = this.queryString.theme || 'default';
+        const themeColors = selectColors(theme);
+        const color = sanitizeColor(this.queryString.color);
         return {
-            areaColor: this.queryString.area_color
-                ? this.queryString.area_color
-                : selectColors(theme).areaColor,
-            bgColor: this.queryString.bg_color
-                ? this.queryString.bg_color
-                : selectColors(theme).bgColor,
-            borderColor: this.queryString.border_color
-                ? this.queryString.border_color
-                : String(this.queryString.hide_border) === 'true'
-                  ? '0000' // transparent
-                  : selectColors(theme).borderColor,
-            color: this.queryString.color ? this.queryString.color : selectColors(theme).color,
-            titleColor: this.queryString.title_color
-                ? this.queryString.title_color
-                : this.queryString.color
-                  ? this.queryString.color
-                  : selectColors(theme).titleColor,
-            lineColor: this.queryString.line
-                ? this.queryString.line
-                : selectColors(theme).lineColor,
-            pointColor: this.queryString.point
-                ? this.queryString.point
-                : selectColors(theme).pointColor,
+            areaColor: sanitizeColor(this.queryString.area_color) ?? themeColors.areaColor,
+            bgColor: sanitizeColor(this.queryString.bg_color) ?? themeColors.bgColor,
+            borderColor:
+                sanitizeColor(this.queryString.border_color) ??
+                (String(this.queryString.hide_border) === 'true'
+                    ? '0000' // transparent
+                    : themeColors.borderColor),
+            color: color ?? themeColors.color,
+            titleColor: sanitizeColor(this.queryString.title_color) ?? color ?? themeColors.titleColor,
+            lineColor: sanitizeColor(this.queryString.line) ?? themeColors.lineColor,
+            pointColor: sanitizeColor(this.queryString.point) ?? themeColors.pointColor,
         };
     }
 
@@ -145,6 +165,7 @@ export class Utilities {
                     }'s Contribution Graph`;
                 }
             }
+            title = escapeHtml(title);
 
             const graph = new Card(
                 options.height,
@@ -172,6 +193,9 @@ export class Utilities {
 
     public setHttpHeader(res: Response, directivesAndAge: string): void {
         res.setHeader('Cache-Control', `${directivesAndAge}`);
+        // Defense in depth: even if a future change reintroduces an
+        // injection bug, this stops any injected <script> from running.
+        res.setHeader('Content-Security-Policy', "script-src 'none'; sandbox");
         res.set('Content-Type', 'image/svg+xml');
     }
 }
