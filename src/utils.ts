@@ -7,8 +7,10 @@ import { QueryOption, ParsedQs, UserDetails } from './interfaces/interface';
 
 // Colors are interpolated raw into SVG attributes and a <style> block (see
 // svgs.ts / graphStyle.ts), so anything other than hex digits could break out
-// into markup/CSS and inject a <script> or event handler.
-const HEX_COLOR = /^[0-9a-fA-F]{1,8}$/;
+// into markup/CSS and inject a <script> or event handler. Restricted to the
+// hex lengths CSS/SVG actually accept (3, 4, 6, 8) so invalid lengths fall
+// back to the theme default instead of rendering as a broken color.
+const HEX_COLOR = /^(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
 
 function sanitizeColor(value: unknown): string | undefined {
     return typeof value === 'string' && HEX_COLOR.test(value) ? value : undefined;

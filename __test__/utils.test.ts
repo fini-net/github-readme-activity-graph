@@ -31,6 +31,7 @@ describe('Utilities Test', () => {
                 .get('/graph?username=ashutosh00710')
                 .expect('Content-Type', 'image/svg+xml; charset=utf-8')
                 .expect('Cache-Control', 'public, max-age=1800')
+                .expect('Content-Security-Policy', "script-src 'none'; sandbox")
                 .expect(200, done);
         });
     });
@@ -43,6 +44,7 @@ describe('Utilities Test', () => {
                 .get('/graph?username=')
                 .expect('Content-Type', 'image/svg+xml; charset=utf-8')
                 .expect('Cache-Control', 'no-store, max-age=0')
+                .expect('Content-Security-Policy', "script-src 'none'; sandbox")
                 .expect(200, done);
         });
     });
@@ -73,6 +75,22 @@ describe('Utilities Test', () => {
             const { colors } = utils.queryOptions();
             expect(colors.color).toBe('abc123');
             expect(colors.bgColor).toBe('fff');
+        });
+
+        it('rejects hex-only values with a length CSS/SVG does not support', () => {
+            const utils = new Utilities({
+                username: 'githubusername',
+                color: 'a', // 1 digit
+                bg_color: 'ab', // 2 digits
+                line: 'abcde', // 5 digits
+                point: 'abcdefa', // 7 digits
+            } as any);
+
+            const { colors } = utils.queryOptions();
+            expect(colors.color).toBe(themes.default.color);
+            expect(colors.bgColor).toBe(themes.default.bgColor);
+            expect(colors.lineColor).toBe(themes.default.lineColor);
+            expect(colors.pointColor).toBe(themes.default.pointColor);
         });
     });
 
