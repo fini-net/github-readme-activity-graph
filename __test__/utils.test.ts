@@ -1,7 +1,7 @@
 import express from 'express';
 import request from 'supertest';
 import { Utilities } from '../src/utils';
-import { fakeQueryString, fakeQueryStringRes, options } from './fakeInputs';
+import { fakeQueryString, fakeQueryStringRes, options, themes } from './fakeInputs';
 import { Handlers } from '../src/handlers';
 import { createGraph } from '../src/createChart';
 
@@ -44,6 +44,52 @@ describe('Utilities Test', () => {
                 .expect('Content-Type', 'image/svg+xml; charset=utf-8')
                 .expect('Cache-Control', 'no-store, max-age=0')
                 .expect(200, done);
+        });
+    });
+
+    describe('Color sanitization', () => {
+        it('falls back to the theme color when a color param is not valid hex', () => {
+            const utils = new Utilities({
+                username: 'githubusername',
+                color: 'red} </style><script>alert(1)</script><style>{',
+                bg_color: '"><script>alert(1)</script>',
+                border_color: 'red;"/><script>alert(1)</script>',
+                area_color: 'javascript:alert(1)',
+                line: 'red</style><script>alert(1)</script>',
+                point: 'red</style><script>alert(1)</script>',
+                title_color: 'red} </style><script>alert(1)</script>',
+            } as any);
+
+            expect(utils.queryOptions().colors).toEqual(themes.default);
+        });
+
+        it('accepts valid hex color params unchanged', () => {
+            const utils = new Utilities({
+                username: 'githubusername',
+                color: 'abc123',
+                bg_color: 'fff',
+            } as any);
+
+            const { colors } = utils.queryOptions();
+            expect(colors.color).toBe('abc123');
+            expect(colors.bgColor).toBe('fff');
+        });
+    });
+
+    describe('Title escaping', () => {
+        it('escapes HTML in custom_title so it cannot break out of the SVG', async () => {
+            const utils = new Utilities({
+                username: 'githubusername',
+                custom_title: '</h1><script>alert(document.domain)</script>',
+            } as any);
+
+            const { finalGraph } = await utils.buildGraph({
+                name: 'someone',
+                contributions: [{ contributionCount: 1, date: '1' }],
+            });
+
+            expect(finalGraph).not.toContain('<script>');
+            expect(finalGraph).toContain('&lt;script&gt;');
         });
     });
 
