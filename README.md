@@ -2,14 +2,6 @@
     <img src="asset/logo.svg" height="150">
 </p>
 
-<h1 align="center">Github Readme Activity Graph</h1>
-
-<a href="https://jb.gg/OpenSourceSupport">
-<p align="center">
-    <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" height="150">
-</p>
-</a>
-<h3 align="center"><a href="https://jb.gg/OpenSourceSupport">Supported by JetBrains</a></h3>
 A dynamically generated activity graph to show your GitHub activities of last 31 days.
 
 ### ⚠️ NOTICE: DEPLOYMENT MOVED ⚠️
@@ -34,6 +26,7 @@ Please refer to the updated link [here](#how-to-use)
     - [Second Method](#second-method)
     - [Finally](#finally)
 - [Self-hosting on DigitalOcean App Platform](#self-hosting-on-digitalocean-app-platform)
+    - [Deploy with OpenTofu / Terraform](#deploy-with-opentofu--terraform)
     - [Prerequisites](#prerequisites)
     - [Deploy](#deploy)
     - [Set the GitHub token](#set-the-github-token)
@@ -217,6 +210,10 @@ Now just add the following to your profile readme and you're good to go.
 This fork ships a [Dockerfile](./Dockerfile) and an [App Platform spec](./.do/app.yaml) so the service can run as a container on DigitalOcean (or any other container host — podman, k8s, fly.io, etc.) instead of depending on the upstream Vercel deployment. The upstream deployment is currently returning HTTP 402 because the maintainer's account is billing-locked ([Ashutosh00710#257](https://github.com/Ashutosh00710/github-readme-activity-graph/issues/257), [Ashutosh00710#259](https://github.com/Ashutosh00710/github-readme-activity-graph/issues/259)). See [chicks-net/www-chicks-net#371](https://github.com/chicks-net/www-chicks-net/issues/371) for the full rationale.
 
 The app is a plain Express 5 server (`src/main.ts`) with no Vercel-specific runtime APIs, so it runs unmodified as a long-running Node process inside the container.
+
+### Deploy with OpenTofu / Terraform
+
+If wrangling `doctl` commands by hand isn't your thing, there's a ready-to-use module over in [`fini-net/fini-infra`](https://github.com/fini-net/fini-infra/tree/main/l7_application/activity-graph) (`l7_application/activity-graph`). It provisions the same `apps-s-1vcpu-0.5gb` container app from this repo's `Dockerfile` as infrastructure-as-code, and rather than pasting the GitHub PAT into the dashboard it pulls your token out of 1Password via the `onepassword` provider — so the secret never lands in code or version control. Check that directory's `README.md` and `main.tf` for the variables (`github_repo`, `github_branch`, `http_port`, `region`, etc.) and run a plain `tofu apply` (or `terraform apply`) to bring the app up. The manual `doctl` flow below does the same job; pick whichever fits your workflow.
 
 ### Prerequisites
 
