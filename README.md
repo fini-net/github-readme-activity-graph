@@ -105,6 +105,9 @@ Customize the appearance of your Activity Graph however you want with URL params
 |     `from`     |       date from which the graph starts        |              format `YYYY-MM-DD`               |
 |      `to`      |         date where the graph will end         |              format `YYYY-MM-DD`               |
 |     `grid`     |                   show grid                   |           boolean (default: `true`)            |
+|    `ghosts`    |     number of prior windows to overlay as     |              number (0 - 6 inclusive,           |
+|                |   faded grey "ghost" lines behind the current  |                   default: `0`)                |
+|                |                    line                       |                                                |
 
 ⚠ **For `custom_title` please make sure that you are using %20 for spaces**
 
@@ -121,6 +124,20 @@ Example:
 ```md
 [![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=ashutosh00710&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/ashutosh00710/github-readme-activity-graph)
 ```
+
+### Ghost lines (`ghosts=N`)
+
+Add `&ghosts=N` to overlay the previous `N` contribution windows as faded grey "ghost" lines behind the current line, so you can see at a glance how this window's pace compares to previous ones:
+
+```md
+[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=ashutosh00710&ghosts=2)](https://github.com/ashutosh00710/github-readme-activity-graph)
+```
+
+- Each ghost is the current window shifted back by its own length — a 31-day graph with `ghosts=2` shows the current 31 days plus the two 31-day windows before it — index-aligned on the X-axis. Works with any `days` value and custom `from`/`to`.
+- Ghosts are drawn in a fixed grey (`#9e9e9e`, ~35% opacity, thinner stroke) regardless of theme, with no points or area fill.
+- Ghost data shares the Y-axis scale, so a busy prior window can flatten a quiet current one.
+- X-axis labels reflect the current window only; ghosts are unlabeled.
+- GitHub only serves contributions for about the last year, so ghost windows reaching further back are skipped — fewer lines than requested may appear for long windows.
 
 ## Deploy on your own Replit instance
 

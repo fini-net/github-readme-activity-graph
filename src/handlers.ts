@@ -16,9 +16,10 @@ export class Handlers {
             const fetcher = new Fetcher(utils.username);
             const queryOptions = utils.queryOptions();
             const fetchCalendarData = await fetcher.fetchContributions(
-                utils.queryOptions().days,
+                queryOptions.days,
                 queryOptions.from,
                 queryOptions.to,
+                queryOptions.ghosts,
             );
 
             const { finalGraph, header } = await utils.buildGraph(fetchCalendarData);

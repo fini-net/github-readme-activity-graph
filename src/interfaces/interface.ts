@@ -2,6 +2,8 @@ export class Query {
     query: string;
     variables: {
         LOGIN: string;
+        // One FROMn/TOn pair per contribution window (current + ghosts).
+        [variable: string]: string;
     };
 }
 
@@ -27,6 +29,7 @@ export class QueryOption {
     radius: number;
     height: number;
     days: number;
+    ghosts: number;
 }
 
 export class ParsedQs {
@@ -49,6 +52,7 @@ export class ParsedQs {
     from?: string;
     to?: string;
     grid?: string;
+    ghosts?: string;
 }
 
 export class GraphArgs {
@@ -62,6 +66,10 @@ export class GraphArgs {
 
 export class UserDetails {
     contributions: Array<ContributionDay>;
+    // Prior contribution windows returned by fetchContributions when ghost
+    // lines were requested; each entry aligns index-for-index with
+    // `contributions`. Absent when no ghosts were requested.
+    ghosts?: Array<Array<ContributionDay>>;
     name: string;
 }
 
@@ -74,17 +82,18 @@ export class Week {
     contributionDays: Array<ContributionDay>;
 }
 
+export class ContributionsCollection {
+    contributionCalendar: {
+        totalContributions: number;
+        weeks: Array<Week>;
+    };
+}
+
 export class ResponseOfApi {
+    // Each requested window comes back under its own alias (c0 = current
+    // window, c1.. = ghosts) on the user object.
     data?: {
-        user: {
-            name: string;
-            contributionsCollection: {
-                contributionCalendar: {
-                    totalContributions: number;
-                    weeks: Array<Week>;
-                };
-            };
-        };
+        user: { name: string } & { [alias: string]: ContributionsCollection };
     };
     errors?: Array<{ message: string; type: string }>;
 }

@@ -97,6 +97,26 @@ export let fakeQueryString = [
         hide_title: false,
         custom_title: undefined,
     },
+    {
+        username: 'githubusername',
+        ghosts: '2',
+    },
+    {
+        username: 'githubusername',
+        ghosts: '9',
+    },
+    {
+        username: 'githubusername',
+        ghosts: '2.7',
+    },
+    {
+        username: 'githubusername',
+        ghosts: '-3',
+    },
+    {
+        username: 'githubusername',
+        ghosts: 'not-a-number',
+    },
 ];
 
 export let fakeQueryStringRes = [
@@ -116,6 +136,7 @@ export let fakeQueryStringRes = [
         hide_title: false,
         area: false,
         days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -136,6 +157,7 @@ export let fakeQueryStringRes = [
         hide_title: false,
         area: false,
         days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -156,6 +178,7 @@ export let fakeQueryStringRes = [
         hide_title: false,
         area: false,
         days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -176,6 +199,7 @@ export let fakeQueryStringRes = [
         hide_title: false,
         area: false,
         days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -196,6 +220,7 @@ export let fakeQueryStringRes = [
         hide_title: false,
         area: false,
         days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -216,6 +241,7 @@ export let fakeQueryStringRes = [
         hide_title: false,
         area: true,
         days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -236,6 +262,7 @@ export let fakeQueryStringRes = [
         area: true,
         hide_title: false,
         days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -256,6 +283,7 @@ export let fakeQueryStringRes = [
         area: true,
         hide_title: true,
         days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -277,6 +305,7 @@ export let fakeQueryStringRes = [
         hide_title: false,
         custom_title: 'some title',
         days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -297,6 +326,112 @@ export let fakeQueryStringRes = [
         area: true,
         hide_title: false,
         days: 31,
+        ghosts: 0,
+        from: '',
+        to: '',
+        grid: true,
+    },
+    {
+        username: 'githubusername',
+        radius: 0,
+        height: 420,
+        colors: {
+            areaColor: '9e4c98',
+            bgColor: 'ffcfe9',
+            borderColor: 'ffffff',
+            color: '9e4c98',
+            titleColor: '9e4c98',
+            lineColor: '9e4c98',
+            pointColor: '403d3d',
+        },
+        hide_title: false,
+        area: false,
+        days: 31,
+        ghosts: 2,
+        from: '',
+        to: '',
+        grid: true,
+    },
+    {
+        username: 'githubusername',
+        radius: 0,
+        height: 420,
+        colors: {
+            areaColor: '9e4c98',
+            bgColor: 'ffcfe9',
+            borderColor: 'ffffff',
+            color: '9e4c98',
+            titleColor: '9e4c98',
+            lineColor: '9e4c98',
+            pointColor: '403d3d',
+        },
+        hide_title: false,
+        area: false,
+        days: 31,
+        ghosts: 6,
+        from: '',
+        to: '',
+        grid: true,
+    },
+    {
+        username: 'githubusername',
+        radius: 0,
+        height: 420,
+        colors: {
+            areaColor: '9e4c98',
+            bgColor: 'ffcfe9',
+            borderColor: 'ffffff',
+            color: '9e4c98',
+            titleColor: '9e4c98',
+            lineColor: '9e4c98',
+            pointColor: '403d3d',
+        },
+        hide_title: false,
+        area: false,
+        days: 31,
+        ghosts: 2,
+        from: '',
+        to: '',
+        grid: true,
+    },
+    {
+        username: 'githubusername',
+        radius: 0,
+        height: 420,
+        colors: {
+            areaColor: '9e4c98',
+            bgColor: 'ffcfe9',
+            borderColor: 'ffffff',
+            color: '9e4c98',
+            titleColor: '9e4c98',
+            lineColor: '9e4c98',
+            pointColor: '403d3d',
+        },
+        hide_title: false,
+        area: false,
+        days: 31,
+        ghosts: 0,
+        from: '',
+        to: '',
+        grid: true,
+    },
+    {
+        username: 'githubusername',
+        radius: 0,
+        height: 420,
+        colors: {
+            areaColor: '9e4c98',
+            bgColor: 'ffcfe9',
+            borderColor: 'ffffff',
+            color: '9e4c98',
+            titleColor: '9e4c98',
+            lineColor: '9e4c98',
+            pointColor: '403d3d',
+        },
+        hide_title: false,
+        area: false,
+        days: 31,
+        ghosts: 0,
         from: '',
         to: '',
         grid: true,
@@ -336,32 +471,45 @@ export let options = {
     title: '',
     area: false,
     plugins: [majorGridPlugin],
+    series: {} as { [name: string]: { showPoint?: boolean; showArea?: boolean } },
 };
 
-export const expectedQuery = (username: string, from: string, to: string) => {
-    return {
-        query: `
-              query userInfo($LOGIN: String!, $FROM: DateTime!, $TO: DateTime!) {
-                user(login: $LOGIN) {
-                  name
-                  contributionsCollection(from: $FROM, to: $TO) {
-                    contributionCalendar {
-                      weeks {
-                        contributionDays {
-                          contributionCount
-                          date
-                        }
+export const expectedQuery = (username: string, windows: Array<{ from: string; to: string }>) => {
+    const variableDefinitions = windows
+        .map((_, i) => `$FROM${i}: DateTime!, $TO${i}: DateTime!`)
+        .join(', ');
+    const contributions = windows
+        .map(
+            (_, i) => `
+                c${i}: contributionsCollection(from: $FROM${i}, to: $TO${i}) {
+                  contributionCalendar {
+                    weeks {
+                      contributionDays {
+                        contributionCount
+                        date
                       }
                     }
                   }
+                }`,
+        )
+        .join('');
+    const variables: { LOGIN: string; [name: string]: string } = {
+        LOGIN: username,
+    };
+    windows.forEach((window, i) => {
+        variables[`FROM${i}`] = window.from;
+        variables[`TO${i}`] = window.to;
+    });
+    return {
+        query: `
+              query userInfo($LOGIN: String!, ${variableDefinitions}) {
+                user(login: $LOGIN) {
+                  name
+                  ${contributions}
                 }
               }
             `,
-        variables: {
-            LOGIN: username,
-            FROM: from,
-            TO: to,
-        },
+        variables,
     };
 };
 
@@ -521,6 +669,33 @@ export const dummyWeeksData = [
             {
                 contributionCount: 11,
             },
+        ],
+    },
+];
+
+// A 14-day window: fewer days than the 31-day current window, so the
+// fetcher must front-pad it with zero days to keep the series aligned.
+export const dummyGhostWeeksData = [
+    {
+        contributionDays: [
+            { contributionCount: 7 },
+            { contributionCount: 3 },
+            { contributionCount: 1 },
+            { contributionCount: 0 },
+            { contributionCount: 5 },
+            { contributionCount: 2 },
+            { contributionCount: 4 },
+        ],
+    },
+    {
+        contributionDays: [
+            { contributionCount: 6 },
+            { contributionCount: 6 },
+            { contributionCount: 0 },
+            { contributionCount: 1 },
+            { contributionCount: 8 },
+            { contributionCount: 3 },
+            { contributionCount: 2 },
         ],
     },
 ];

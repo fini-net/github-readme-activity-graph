@@ -104,13 +104,24 @@ export const graphStyle = (color: string, line: string, point: string, area: str
       animation: dash 5s ease-in-out forwards;
     }
 
+    /* Faded prior windows ("ghost" lines) behind the current line
+       (chicks-net/chicks-projects#130). Fixed grey regardless of theme;
+       the doubled-class selector out-specifies the .ct-line rule above
+       for stroke, opacity and width, while the dash-draw animation and
+       fill:none are inherited. */
+    .ct-series-ghost .ct-line {
+      stroke: #9e9e9e;
+      stroke-opacity: 0.35;
+      stroke-width: 2px;
+    }
+
     .ct-area {
       stroke: none;
       fill-opacity: 0.1;
     }
 
-    .ct-series-a .ct-area,
-    .ct-series-a .ct-slice-pie {
+    .ct-series-current .ct-area,
+    .ct-series-current .ct-slice-pie {
       fill: #${area};
     }
 
