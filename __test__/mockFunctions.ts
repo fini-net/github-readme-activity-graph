@@ -1,12 +1,15 @@
-import { dummyWeeksData } from './fakeInputs';
+import { dummyWeeksData, dummyGhostWeeksData } from './fakeInputs';
 
+// The fixture is cloned per use so mocked windows never share (and never
+// mutate) the same underlying data.
 const weeks = () => {
+    const data = JSON.parse(JSON.stringify(dummyWeeksData));
     for (let i = 1; i <= new Date().getDay(); i++) {
-        dummyWeeksData[6].contributionDays.push({
+        data[6].contributionDays.push({
             contributionCount: 0,
         });
     }
-    return dummyWeeksData;
+    return data;
 };
 
 //For valid username
@@ -16,10 +19,43 @@ export const mockFetchCorrect = jest.fn().mockReturnValue(
             data: {
                 user: {
                     name: 'Ashutosh Dwivedi',
-                    contributionsCollection: {
+                    c0: {
                         contributionCalendar: {
                             totalContributions: 389,
                             weeks: weeks(),
+                        },
+                    },
+                },
+            },
+        },
+    }),
+);
+
+//For ghost windows: c1 trims its longer calendar to the current window's
+//day count, c2 pads its short calendar at the front, and c3 is missing
+//entirely so it gets skipped.
+export const mockFetchGhosts = jest.fn().mockReturnValue(
+    Promise.resolve({
+        data: {
+            data: {
+                user: {
+                    name: 'Ashutosh Dwivedi',
+                    c0: {
+                        contributionCalendar: {
+                            totalContributions: 389,
+                            weeks: weeks(),
+                        },
+                    },
+                    c1: {
+                        contributionCalendar: {
+                            totalContributions: 210,
+                            weeks: weeks(),
+                        },
+                    },
+                    c2: {
+                        contributionCalendar: {
+                            totalContributions: 97,
+                            weeks: JSON.parse(JSON.stringify(dummyGhostWeeksData)),
                         },
                     },
                 },
@@ -58,17 +94,17 @@ export const mockQueryCorrect = jest.fn().mockReturnValue({
          name
          contributionsCollection {
            contributionCalendar {
-              totalContributions
-              weeks {
-                contributionDays {
-                  contributionCount
-                }
-              }
-            }
-          }
-        }
-      },
-    `,
+               totalContributions
+               weeks {
+                 contributionDays {
+                   contributionCount
+                 }
+               }
+             }
+           }
+         }
+       },
+     `,
     variables: {
         LOGIN: 'ashutosh00710',
     },
@@ -82,17 +118,17 @@ export const mockQueryIncorrect = jest.fn().mockReturnValue({
          name
          contributionsCollection {
            contributionCalendar {
-              totalContributions
-              weeks {
-                contributionDays {
-                  contributionCount
-                }
-              }
-            }
-          }
-        }
-      },
-    `,
+               totalContributions
+               weeks {
+                 contributionDays {
+                   contributionCount
+                 }
+               }
+             }
+           }
+         }
+       },
+     `,
     variables: {
         LOGIN: '',
     },

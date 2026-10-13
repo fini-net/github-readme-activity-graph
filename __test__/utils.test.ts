@@ -24,7 +24,11 @@ describe('Utilities Test', () => {
     };
 
     describe('GET /graph with correct credential', () => {
-        test('responding', (done) => {
+        // This test calls the live GitHub API through the /graph handler;
+        // without a TOKEN (e.g. CI without repo secrets) it would fail, so
+        // it is skipped instead of reporting a false negative.
+        const maybeTest = process.env.TOKEN ? test : test.skip;
+        maybeTest('responding', (done) => {
             const app = fakeServer();
             app.get('/graph', handlers.getGraph);
             request(app)
@@ -139,7 +143,13 @@ describe('Utilities Test', () => {
         ];
         const graph: Promise<string> = await createGraph('line', options, {
             labels: days.map((day) => day.date),
-            series: [{ value: days.map((day) => day.contributionCount) }],
+            series: [
+                {
+                    name: 'current',
+                    className: 'ct-series-current',
+                    data: days.map((day) => day.contributionCount),
+                },
+            ],
         });
         expect(graph).toMatchSnapshot();
     });

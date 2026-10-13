@@ -71,6 +71,17 @@ export class Utilities {
         }
     }
 
+    // Ghost overlay count, clamped into [0, 6]; anything that isn't a finite
+    // number (or is below the range) falls back to 0, which is exactly the
+    // current single-line behavior.
+    private validateGhosts(ghosts?: string): number {
+        const g = Math.floor(Number(ghosts));
+        if (!Number.isFinite(g)) {
+            return 0;
+        }
+        return Math.min(Math.max(g, 0), 6);
+    }
+
     private validateDate(date?: string): boolean {
         const format = 'YYYY-MM-DD';
         return moment(date, format, true).isValid();
@@ -140,6 +151,7 @@ export class Utilities {
                 ? Math.min(Math.max(this.queryString.height, 200), 600)
                 : 420, // Custom height implementation from range [200, 600], if not specified use default value - 420
             days: isFromValid && isToValid ? days : this.validateDays(this.queryString.days),
+            ghosts: this.validateGhosts(this.queryString.ghosts),
             grid: this.queryString.grid === 'false' ? false : true,
             from,
             to,
@@ -176,7 +188,10 @@ export class Utilities {
                 options.area,
                 options.grid,
             );
-            const getChart = await graph.buildGraph(fetchCalendarData.contributions);
+            const getChart = await graph.buildGraph(
+                fetchCalendarData.contributions,
+                fetchCalendarData.ghosts,
+            );
             return {
                 finalGraph: getChart,
                 header: {

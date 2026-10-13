@@ -65,6 +65,10 @@ export class Card {
             showArea: this.area,
             fullWidth: true,
             plugins: [majorGridPlugin],
+            // Per-series overrides, filled in by buildGraph. Chartist reads
+            // these by series name (getSeriesOption), falling back to the
+            // global options for anything unset.
+            series: {} as { [name: string]: { showPoint?: boolean; showArea?: boolean } },
         };
     }
 
@@ -83,14 +87,39 @@ export class Card {
     //     return days.reverse();
     // }
 
-    async buildGraph(days: ContributionDay[]): Promise<string> {
+    async buildGraph(
+        days: ContributionDay[],
+        ghosts?: Array<Array<ContributionDay>>,
+    ): Promise<string> {
         //Options to pass in createGraph function
         const options = this.getOptions();
+
+        // Ghost series go FIRST: SVG paints in document order, so the faded
+        // prior windows sit behind the current window's line.
+        const series: Array<{ name: string; className: string; data: number[] }> = [];
+        (ghosts ?? []).forEach((ghost, i) =>
+            series.push({
+                name: `ghost-${i + 1}`,
+                className: 'ct-series-ghost',
+                data: ghost.map((day) => day.contributionCount),
+            }),
+        );
+        series.push({
+            name: 'current',
+            className: 'ct-series-current',
+            data: days.map((day) => day.contributionCount),
+        });
+
+        // Ghosts are plain comparison lines: no points, no area fill. The
+        // current window keeps the global options.
+        (ghosts ?? []).forEach((_, i) => {
+            options.series[`ghost-${i + 1}`] = { showPoint: false, showArea: false };
+        });
 
         //Construction of graph from node-chartist
         const line: Promise<string> = await createGraph('line', options, {
             labels: days.map((day) => day.date),
-            series: [{ value: days.map((day) => day.contributionCount) }],
+            series,
         });
 
         //Arguments to construct graphs with rect and other options
