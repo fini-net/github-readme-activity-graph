@@ -2,6 +2,27 @@ import { createGraph } from './createChart';
 import { graphSvg } from './svgs';
 import { Colors, ContributionDay } from './interfaces/interface';
 
+/**
+ * Chartist plugin that emphasizes gridlines whose tick value is a multiple of
+ * 20 (chicks-net/chicks-projects#129), so it's easier to eyeball where
+ * contribution counts cross the 20/40/60 thresholds.
+ *
+ * The plugin runs before Chartist creates the chart, so listening for `draw`
+ * events catches every gridline. X-axis day ticks are strings, so the numeric
+ * check skips them; the tick-0 baseline darkens too, which reads as an
+ * intentional solid floor. The class is added on the element rather than via
+ * inline SVG attributes because the `.ct-grid` CSS rule would win against
+ * presentation attributes — the doubled-class CSS selector out-specifies it.
+ */
+export const majorGridPlugin = (chart: any) => {
+    chart.on('draw', (data: any) => {
+        const value = data.type === 'grid' ? data.axis?.ticks?.[data.index] : undefined;
+        if (typeof value === 'number' && value % 20 === 0) {
+            data.element.addClass('ct-grid-major');
+        }
+    });
+};
+
 export class Card {
     constructor(
         private readonly height: number,
@@ -43,6 +64,7 @@ export class Card {
             },
             showArea: this.area,
             fullWidth: true,
+            plugins: [majorGridPlugin],
         };
     }
 

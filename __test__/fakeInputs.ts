@@ -1,4 +1,5 @@
 import { GraphArgs } from '../src/interfaces/interface';
+import { majorGridPlugin } from '../src/GraphCards';
 
 export let fakeQueryString = [
     {
@@ -334,6 +335,7 @@ export let options = {
     },
     title: '',
     area: false,
+    plugins: [majorGridPlugin],
 };
 
 export const expectedQuery = (username: string, from: string, to: string) => {

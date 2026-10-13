@@ -81,6 +81,14 @@ export const graphStyle = (color: string, line: string, point: string, area: str
       stroke-dasharray: 2px;
     }
 
+    /* Emphasized gridlines at tick values divisible by 20
+       (chicks-net/chicks-projects#129). The doubled-class selector
+       out-specifies the .ct-grid rule above. */
+    .ct-grid.ct-grid-major {
+      stroke-opacity: 0.85;
+      stroke-dasharray: none;
+    }
+
     .ct-point {
       stroke-width: 10px;
       stroke-linecap: round;
