@@ -54,7 +54,8 @@ export class Utilities {
                     ? '0000' // transparent
                     : themeColors.borderColor),
             color: color ?? themeColors.color,
-            titleColor: sanitizeColor(this.queryString.title_color) ?? color ?? themeColors.titleColor,
+            titleColor:
+                sanitizeColor(this.queryString.title_color) ?? color ?? themeColors.titleColor,
             lineColor: sanitizeColor(this.queryString.line) ?? themeColors.lineColor,
             pointColor: sanitizeColor(this.queryString.point) ?? themeColors.pointColor,
         };

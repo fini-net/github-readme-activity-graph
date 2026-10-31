@@ -26,7 +26,7 @@ export class Handlers {
             utils.setHttpHeader(res, header.maxAge);
 
             res.status(200).send(finalGraph);
-        } catch (error) {
+        } catch {
             res.setHeader('Cache-Control', 'no-store, max-age=0');
             res.setHeader('Content-Security-Policy', "script-src 'none'; sandbox");
             res.set('Content-Type', 'image/svg+xml');
@@ -48,7 +48,7 @@ export class Handlers {
             } else {
                 res.send(invalidUserSvg(fetchCalendarData));
             }
-        } catch (error) {
+        } catch {
             res.send(invalidUserSvg('Something unexpected happened 💥'));
         }
     }
