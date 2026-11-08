@@ -4,17 +4,10 @@
 
 A dynamically generated activity graph to show your GitHub activities of last 31 days.
 
-### ⚠️ NOTICE: DEPLOYMENT MOVED ⚠️
-
-The canonical deployment is now `https://github-readme-activity-graph.vercel.app`. Previous deployments at `https://activity-graph.herokuapp.com` (Heroku free tier discontinued) and `https://github-readme-activity-graph.cyclic.app` (Cyclic.sh shut down in early 2025) are no longer reachable. For background see [issue #197](https://github.com/Ashutosh00710/github-readme-activity-graph/issues/197#issuecomment-1560633754).
-
-Please refer to the updated link [here](#how-to-use)
-
 ## Table of contents
 
 - [Table of contents](#table-of-contents)
 - [How to Use](#how-to-use)
-    - [Attention ⚠](#attention-)
 - [Use themes](#use-themes)
 - [Available Themes](#available-themes)
 - [Customization](#customization)
@@ -33,10 +26,11 @@ Please refer to the updated link [here](#how-to-use)
     - [Point a custom domain (optional)](#point-a-custom-domain-optional)
     - [Updating the deployment](#updating-the-deployment)
 - [Contributing](#contributing)
-- [Core Team 💻](#core-team-)
-- [Contributors ✨](#contributors-)
+- [Acknowledgements](#acknowledgements)
+- [Upstream Core Team 💻](#upstream-core-team-)
+- [Upstream Contributors ✨](#upstream-contributors-)
 - [Resources Used to build this project](#resources-used-to-build-this-project)
-- [Star History](#star-history)
+- [Upstream Star History](#upstream-star-history)
     - [Made with ❤ and TypeScript ](#made-with--and-typescript-)
 
 ## How to Use
@@ -46,17 +40,15 @@ Just paste the following URL in your profile readme and you are good to go.
 **Pass your `username` in the URL**
 
 ```md
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=Ashutosh00710)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![chicks-net's github activity graph](https://activity-graph-hftzl.ondigitalocean.app/graph?username=chicks-net)](https://github.com/fini-net/github-readme-activity-graph)
 ```
-
-### [Attention ⚠](#deploy-on-your-own-replit-instance)
 
 ## Use themes
 
-_`username=ashutosh00710&theme=theme_name`_
+_`username=chicks-net&theme=theme_name`_
 
 ```md
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=Ashutosh00710&theme=dracula)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![chicks-net's github activity graph](https://activity-graph-hftzl.ondigitalocean.app/graph?username=chicks-net&theme=dracula)](https://github.com/fini-net/github-readme-activity-graph)
 ```
 
 [Manual Customization](#customization) is also available
@@ -77,7 +69,7 @@ _`username=ashutosh00710&theme=theme_name`_
 |      **tokyo-night**       |  <img src="./asset/tokyo-night.png" height=250 alt="graph"/>   |
 |     **high-contrast**      | <img src="./asset/high-contrast.png" height=250 alt="graph"/>  |
 
-For more themes click [here](https://github.com/Ashutosh00710/github-readme-activity-graph/blob/main/THEMES.md)
+For more themes click [here](./THEMES.md)
 
 ## Customization
 
@@ -116,13 +108,13 @@ Example:
 **`custom_title=This%20is%20a%20title`**
 
 ```md
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=ashutosh00710&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![chicks-net's github activity graph](https://activity-graph-hftzl.ondigitalocean.app/graph?username=chicks-net&custom_title=This%20is%20a%20title&hide_border=true)](https://github.com/fini-net/github-readme-activity-graph)
 ```
 
 **Example:**
 
 ```md
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=ashutosh00710&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![chicks-net's github activity graph](https://activity-graph-hftzl.ondigitalocean.app/graph?username=chicks-net&bg_color=fffff0&color=708090&line=24292e&point=24292e&area=true&border_color=ff0000)](https://github.com/fini-net/github-readme-activity-graph)
 ```
 
 ### Ghost lines (`ghosts=N`)
@@ -130,7 +122,7 @@ Example:
 Add `&ghosts=N` to overlay the previous `N` contribution windows as faded grey "ghost" lines behind the current line, so you can see at a glance how this window's pace compares to previous ones:
 
 ```md
-[![Ashutosh's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=ashutosh00710&ghosts=2)](https://github.com/ashutosh00710/github-readme-activity-graph)
+[![chicks-net's github activity graph](https://activity-graph-hftzl.ondigitalocean.app/graph?username=chicks-net&ghosts=2)](https://github.com/fini-net/github-readme-activity-graph)
 ```
 
 - Each ghost is the current window shifted back by its own length — a 31-day graph with `ghosts=2` shows the current 31 days plus the two 31-day windows before it — index-aligned on the X-axis. Works with any `days` value and custom `from`/`to`.
@@ -149,8 +141,8 @@ Add `&ghosts=N` to overlay the previous `N` contribution windows as faded grey "
 1. Sign in to Replit or create a new account at https://replit.com
 2. Click the Deploy button below
 
- <a href="https://repl.it/github/Ashutosh00710/github-readme-activity-graph">
-   <img alt="Run on Repl.it" src="https://repl.it/badge/github/Ashutosh00710/github-readme-activity-graph" style="height: 40px; width: 190px;" />
+ <a href="https://repl.it/github/fini-net/github-readme-activity-graph">
+   <img alt="Run on Repl.it" src="https://repl.it/badge/github/fini-net/github-readme-activity-graph" style="height: 40px; width: 190px;" />
  </a>
 
 3. On the page that comes up, choose language as `Node.js` and then click `Import from GitHub` Button
@@ -201,7 +193,7 @@ Add `&ghosts=N` to overlay the previous `N` contribution windows as faded grey "
 
 Alternatively, click the button below and follow the instructions.
 
-[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/Ashutosh00710/github-readme-activity-graph)
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/fini-net/github-readme-activity-graph)
 
 After the deployment is complete:
 
@@ -282,9 +274,13 @@ then add a CNAME on the chicks.net side pointing at the `.ondigitalocean.app` ho
 
 ## Contributing
 
-Please read through our [contributing guidelines](https://github.com/Ashutosh00710/github-readme-activity-graph/blob/main/CONTRIBUTING.md). Directions are included for opening issues, coding standards, and notes on development.
+Please read through our [contributing guidelines](./CONTRIBUTING.md). Directions are included for opening issues, coding standards, and notes on development.
 
-## Core Team 💻
+## Acknowledgements
+
+This project is a fork of [Ashutosh00710/github-readme-activity-graph](https://github.com/Ashutosh00710/github-readme-activity-graph) by Ashutosh Dwivedi and its contributors. Full credit for the original design and implementation belongs upstream — this fork just keeps a good thing running after the upstream free-tier deployments went away.
+
+## Upstream Core Team 💻
 
 <table>
     <tr>
@@ -316,7 +312,7 @@ Please read through our [contributing guidelines](https://github.com/Ashutosh007
     </tr>
 </table>
 
-## Contributors ✨
+## Upstream Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
@@ -536,7 +532,7 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 </br>
 <hr/>
 
-## Star History
+## Upstream Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Ashutosh00710/github-readme-activity-graph&type=Timeline)](https://star-history.com/#Ashutosh00710/github-readme-activity-graph&Timeline)
 
