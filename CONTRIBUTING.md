@@ -63,32 +63,38 @@ Our aim is to **keep it simple** for the developers to contribute to this projec
 ```text
 
 ├── ...
-├── .github                          #conatins issues and pull request templates
+├── .do
+│ └── app.yaml                       #DigitalOcean App Platform spec
+├── .github                          #contains issue/PR templates and CI workflows
 │ ├── ISSUE_TEMPLATE
-│ │ ├── bug_report.md
+│ │ ├── bug-report.md
 │ │ └── feature_request.md
+│ ├── workflows                      #CI: lint + tests, app spec validation
 │ └── PULL_REQUEST_TEMPLATE.md
-├── __test__                         #conatins test for the project
-│ ├── utils.test.js                  #tests for functions in src/utils.ts
-│ ├── svgs.test.js                   #tests for functions in src/svgs.ts
-│ ├── mockFunctions.js               #contains mock functions for fetching.test.js
-│ ├── fetching.test.js               #tests for functions in src/fetching.ts
-│ └── fakeInputs.js                  #conatins fake inputs for tests
+├── __test__                         #contains tests for the project
+│ ├── __snapshots__                  #Jest snapshots of rendered SVGs
+│ ├── fakeInputs.ts                  #contains fake inputs for tests
+│ ├── fetching.test.ts               #tests for functions in src/fetcher.ts
+│ ├── mockFunctions.ts               #contains mock functions for fetching.test.ts
+│ ├── svgs.test.ts                   #tests for src/svgs.ts and src/GraphCards.ts
+│ ├── themes.test.ts                 #tests for src/styles/themes.ts
+│ └── utils.test.ts                  #tests for functions in src/utils.ts
 ├── asset                            #contains logo and screenshots of graphs
-├── interfaces
-│ └── interface.ts                   #contains all used interfaces throughout the code
-├── types
-│ └── types.ts                       #contains all used types throughout the code
 ├── src
+│ ├── interfaces
+│ │ └── interface.ts                 #contains all used interfaces throughout the code
+│ ├── styles
+│ │ ├── graphAnimation.ts            #contains all the animations of the graph
+│ │ ├── graphStyle.ts                #contains style(CSS) of the graph
+│ │ └── themes.ts                    #all the themes are here
 │ ├── createChart.ts                 #creation of graph with chartist.js and node-chartist
-│ ├── GraphChards.ts                 #class of Graph Cards
+│ ├── fetcher.ts                     #fetches contributions from the GitHub GraphQL API
+│ ├── GraphCards.ts                  #class of Graph Cards
+│ ├── handlers.ts                    #Express route handlers
 │ ├── main.ts                        #everything starts from here
 │ ├── svgs.ts                        #contains svgs used or created throughout the project
-│ └── utils.ts                       #contains utility functions
-├── styles
-│ ├── graphAnimation.ts              #contains all the animations of the graph
-│ ├── graphStyle.ts                  #contains style(CSS) of the graph
-│ └── themes.ts                      #all the themes are here
+│ └── utils.ts                       #query parsing, sanitizing, and graph building
+├── Dockerfile                       #container build for self-hosting
 ├── ...
 
 ```
