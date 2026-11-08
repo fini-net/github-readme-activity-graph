@@ -8,6 +8,12 @@ We love your input! We want to make contributing to this project as easy and tra
 - Proposing new features
 - Becoming a maintainer
 
+## This is a fork
+
+This repo is the [fini-net](https://github.com/fini-net/github-readme-activity-graph) fork of [Ashutosh00710/github-readme-activity-graph](https://github.com/Ashutosh00710/github-readme-activity-graph). It started as a way to keep the graphs rendering after the upstream deployment went dark, but it has picked up enough of its own features (ghost lines, major gridlines, input sanitizing, a container build, DigitalOcean deployment) that it's drifting further from upstream with every merge. Don't expect changes here to flow back upstream, or upstream changes to apply here cleanly.
+
+To keep that drift manageable, **all work happens on the `deploy` branch**. Branch from `deploy` and open pull requests against `deploy`. The `main` branch is left mirroring upstream so syncing with it doesn't turn into a merge-conflict festival. Heads up: merging into `deploy` redeploys the live service.
+
 ## Before you contribute
 
 Our aim is to **keep it simple** for the developers to contribute to this project. See the folder structure (with concise description)
@@ -18,13 +24,13 @@ Our aim is to **keep it simple** for the developers to contribute to this projec
 
 2. Clone (download) your fork to your computer
 
-3. Set your streams so you can sync your clone with the original repo (get the latest updates)
+3. Set your streams so you can sync your clone with this repo (get the latest updates)
 
-   - `git remote add upstream https://github.com/Ashutosh00710/github-readme-activity-graph`
-   - `git pull upstream main`
-   - The above 2 commands will synchronize your forked version of the project with the actual repository.
+   - `git remote add upstream https://github.com/fini-net/github-readme-activity-graph`
+   - `git pull upstream deploy`
+   - The above 2 commands will synchronize your forked version of the project with the `deploy` branch of this repository.
 
-4. Create a branch `git checkout -b <your_branch_name>`.
+4. Create a branch from `deploy`: `git checkout -b <your_branch_name> upstream/deploy`.
 
 5. [Generate your personal access token](https://github.com/settings/tokens)
 
@@ -46,49 +52,55 @@ Our aim is to **keep it simple** for the developers to contribute to this projec
    Your local changes to the following files would be overwritten by merge. Please commit your changes or stash them before you merge
    ```
 
-   on using `git pull upstream main` use:
+   on using `git pull upstream deploy` use:
 
    - `git stash`
-   - `git pull upstream main`
+   - `git pull upstream deploy`
    - `git stash pop`
 
    for more info on this [visit](https://bluecast.tech/blog/git-stash/)
 
 10. Commit and push the code to your fork
 
-11. Create a pull request to have the changes merged from your fork into the origin.
+11. Create a pull request against the `deploy` branch to have the changes merged from your fork into this repo.
 
 ### Folder Structure
 
 ```text
 
 ├── ...
-├── .github                          #conatins issues and pull request templates
+├── .do
+│ └── app.yaml                       #DigitalOcean App Platform spec
+├── .github                          #contains issue/PR templates and CI workflows
 │ ├── ISSUE_TEMPLATE
-│ │ ├── bug_report.md
+│ │ ├── bug-report.md
 │ │ └── feature_request.md
+│ ├── workflows                      #CI: lint + tests, app spec validation
 │ └── PULL_REQUEST_TEMPLATE.md
-├── __test__                         #conatins test for the project
-│ ├── utils.test.js                  #tests for functions in src/utils.ts
-│ ├── svgs.test.js                   #tests for functions in src/svgs.ts
-│ ├── mockFunctions.js               #contains mock functions for fetching.test.js
-│ ├── fetching.test.js               #tests for functions in src/fetching.ts
-│ └── fakeInputs.js                  #conatins fake inputs for tests
+├── __test__                         #contains tests for the project
+│ ├── __snapshots__                  #Jest snapshots of rendered SVGs
+│ ├── fakeInputs.ts                  #contains fake inputs for tests
+│ ├── fetching.test.ts               #tests for functions in src/fetcher.ts
+│ ├── mockFunctions.ts               #contains mock functions for fetching.test.ts
+│ ├── svgs.test.ts                   #tests for src/svgs.ts and src/GraphCards.ts
+│ ├── themes.test.ts                 #tests for src/styles/themes.ts
+│ └── utils.test.ts                  #tests for functions in src/utils.ts
 ├── asset                            #contains logo and screenshots of graphs
-├── interfaces
-│ └── interface.ts                   #contains all used interfaces throughout the code
-├── types
-│ └── types.ts                       #contains all used types throughout the code
 ├── src
+│ ├── interfaces
+│ │ └── interface.ts                 #contains all used interfaces throughout the code
+│ ├── styles
+│ │ ├── graphAnimation.ts            #contains all the animations of the graph
+│ │ ├── graphStyle.ts                #contains style(CSS) of the graph
+│ │ └── themes.ts                    #all the themes are here
 │ ├── createChart.ts                 #creation of graph with chartist.js and node-chartist
-│ ├── GraphChards.ts                 #class of Graph Cards
+│ ├── fetcher.ts                     #fetches contributions from the GitHub GraphQL API
+│ ├── GraphCards.ts                  #class of Graph Cards
+│ ├── handlers.ts                    #Express route handlers
 │ ├── main.ts                        #everything starts from here
 │ ├── svgs.ts                        #contains svgs used or created throughout the project
-│ └── utils.ts                       #contains utility functions
-├── styles
-│ ├── graphAnimation.ts              #contains all the animations of the graph
-│ ├── graphStyle.ts                  #contains style(CSS) of the graph
-│ └── themes.ts                      #all the themes are here
+│ └── utils.ts                       #query parsing, sanitizing, and graph building
+├── Dockerfile                       #container build for self-hosting
 ├── ...
 
 ```
@@ -97,7 +109,7 @@ Our aim is to **keep it simple** for the developers to contribute to this projec
 
 Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
 
-1. Fork the repo and create your branch from `main`.
+1. Fork the repo and create your branch from `deploy` (not `main`; see [This is a fork](#this-is-a-fork)).
 2. If you've added code that should be tested, add tests.
 3. If your change needs an explanation to the user, update the documentation.
 4. Ensure the test suite passes.

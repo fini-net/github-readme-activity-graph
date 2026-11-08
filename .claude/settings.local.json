@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(npx tsc *)",
+      "Bash(npx jest *)",
+      "Bash(git stash *)",
+      "Bash(npx eslint *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git push *)",
+      "Bash(gh pr *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git pull *)",
+      "Bash(npm view *)",
+      "Bash(npm outdated *)",
+      "Bash(npm ls *)",
+      "Bash(npm install *)",
+      "Bash(npm audit *)"
+    ]
+  }
+}
