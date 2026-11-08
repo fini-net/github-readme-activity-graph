@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-An Express 5 + TypeScript service that renders a GitHub user's contribution history as an SVG line graph for embedding in READMEs. This is the `fini-net` fork of [Ashutosh00710/github-readme-activity-graph](https://github.com/Ashutosh00710/github-readme-activity-graph), kept alive because the upstream Vercel deployment is billing-locked (HTTP 402). Upstream links in `package.json` and `CONTRIBUTING.md` still point at the original repo.
+An Express 5 + TypeScript service that renders a GitHub user's contribution history as an SVG line graph for embedding in READMEs. This is the `fini-net` fork of [Ashutosh00710/github-readme-activity-graph](https://github.com/Ashutosh00710/github-readme-activity-graph), kept alive because the upstream Vercel deployment is billing-locked (HTTP 402). The fork has diverged substantially from upstream, so don't assume upstream changes or docs apply here. The repo/bugs/homepage links in `package.json` still point at the original repo.
 
 ## Commands
 
