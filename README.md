@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="asset/logo.svg" height="150">
+    <img src="asset/logo.svg" height="150" alt="github-readme-activity-graph logo">
 </p>
 
 A dynamically generated activity graph to show your GitHub activities of last 31 days.
@@ -11,27 +11,27 @@ A dynamically generated activity graph to show your GitHub activities of last 31
 - [Use themes](#use-themes)
 - [Available Themes](#available-themes)
 - [Customization](#customization)
-    - [Common Options](#common-options)
+  - [Common Options](#common-options)
 - [Deploy on your own Replit instance](#deploy-on-your-own-replit-instance)
-    - [Follow the steps](#follow-the-steps)
+  - [Follow the steps](#follow-the-steps)
 - [Deploy on your own Vercel instance](#deploy-on-your-own-vercel-instance)
-    - [First Method](#first-method)
-    - [Second Method](#second-method)
-    - [Finally](#finally)
+  - [First Method](#first-method)
+  - [Second Method](#second-method)
+  - [Finally](#finally)
 - [Self-hosting on DigitalOcean App Platform](#self-hosting-on-digitalocean-app-platform)
-    - [Deploy with OpenTofu / Terraform](#deploy-with-opentofu--terraform)
-    - [Prerequisites](#prerequisites)
-    - [Deploy](#deploy)
-    - [Set the GitHub token](#set-the-github-token)
-    - [Point a custom domain (optional)](#point-a-custom-domain-optional)
-    - [Updating the deployment](#updating-the-deployment)
+  - [Deploy with OpenTofu / Terraform](#deploy-with-opentofu--terraform)
+  - [Prerequisites](#prerequisites)
+  - [Deploy](#deploy)
+  - [Set the GitHub token](#set-the-github-token)
+  - [Point a custom domain (optional)](#point-a-custom-domain-optional)
+  - [Updating the deployment](#updating-the-deployment)
 - [Contributing](#contributing)
 - [Acknowledgements](#acknowledgements)
 - [Upstream Core Team 💻](#upstream-core-team-)
 - [Upstream Contributors ✨](#upstream-contributors-)
 - [Resources Used to build this project](#resources-used-to-build-this-project)
 - [Upstream Star History](#upstream-star-history)
-    - [Made with ❤ and TypeScript ](#made-with--and-typescript-)
+  - [Made with ❤ and TypeScript](#made-with--and-typescript-)
 
 ## How to Use
 
@@ -69,37 +69,35 @@ _`username=chicks-net&theme=theme_name`_
 |      **tokyo-night**       |  <img src="./asset/tokyo-night.png" height=250 alt="graph"/>   |
 |     **high-contrast**      | <img src="./asset/high-contrast.png" height=250 alt="graph"/>  |
 
-For more themes click [here](./THEMES.md)
+For more themes, check out [THEMES.md](./THEMES.md)
 
 ## Customization
 
 Customize the appearance of your Activity Graph however you want with URL params.
 
-#### Common Options
+### Common Options
 
-|   Arguments    |                  Description                  |                 Type of Value                  |
-| :------------: | :-------------------------------------------: | :--------------------------------------------: |
-|   `bg_color`   |            card's background color            |             hex code (without `#`)             |
-| `border_color` |              card's border color              |             hex code (without `#`)             |
-|    `color`     |            graph card's text color            |             hex code (without `#`)             |
-| `title_color`  |           graph card's title color            |             hex code (without `#`)             |
-|     `line`     |              graph's line color               |             hex code (without `#`)             |
-|    `point`     |         color of points on line graph         |             hex code (without `#`)             |
-|  `area_color`  |       color of the area under the graph       |             hex code (without `#`)             |
-|     `area`     |          shows area under the graph           |           boolean (default: `false`)           |
-| `hide_border`  |   makes the border of the graph transparent   |           boolean (default: `false`)           |
-|  `hide_title`  |       sets the title to an empty string       |           boolean (default: `false`)           |
-| `custom_title` |          set the title to any string          |                     string                     |
-|    `theme`     | name of [available themes](#available-themes) |                     string                     |
-|    `radius`    |            border radius of graph             |            number (0-16 inclusive)             |
-|    `height`    |              height of the graph              |           number (200-600 inclusive)           |
-|     `days`     |      number of to days display on graph       | number between (1 - 90) [Recommended below 40] |
-|     `from`     |       date from which the graph starts        |              format `YYYY-MM-DD`               |
-|      `to`      |         date where the graph will end         |              format `YYYY-MM-DD`               |
-|     `grid`     |                   show grid                   |           boolean (default: `true`)            |
-|    `ghosts`    |     number of prior windows to overlay as     |              number (0 - 6 inclusive,           |
-|                |   faded grey "ghost" lines behind the current  |                   default: `0`)                |
-|                |                    line                       |                                                |
+|   Arguments    |                                      Description                                       |                 Type of Value                  |
+| :------------: | :------------------------------------------------------------------------------------: | :--------------------------------------------: |
+|   `bg_color`   |                                card's background color                                 |             hex code (without `#`)             |
+| `border_color` |                                  card's border color                                   |             hex code (without `#`)             |
+|    `color`     |                                graph card's text color                                 |             hex code (without `#`)             |
+| `title_color`  |                                graph card's title color                                |             hex code (without `#`)             |
+|     `line`     |                                   graph's line color                                   |             hex code (without `#`)             |
+|    `point`     |                             color of points on line graph                              |             hex code (without `#`)             |
+|  `area_color`  |                           color of the area under the graph                            |             hex code (without `#`)             |
+|     `area`     |                               shows area under the graph                               |           boolean (default: `false`)           |
+| `hide_border`  |                       makes the border of the graph transparent                        |           boolean (default: `false`)           |
+|  `hide_title`  |                           sets the title to an empty string                            |           boolean (default: `false`)           |
+| `custom_title` |                              set the title to any string                               |                     string                     |
+|    `theme`     |                     name of [available themes](#available-themes)                      |                     string                     |
+|    `radius`    |                                 border radius of graph                                 |            number (0-16 inclusive)             |
+|    `height`    |                                  height of the graph                                   |           number (200-600 inclusive)           |
+|     `days`     |                           number of to days display on graph                           | number between (1 - 90) [Recommended below 40] |
+|     `from`     |                            date from which the graph starts                            |              format `YYYY-MM-DD`               |
+|      `to`      |                             date where the graph will end                              |              format `YYYY-MM-DD`               |
+|     `grid`     |                                       show grid                                        |           boolean (default: `true`)            |
+|    `ghosts`    | number of prior windows to overlay as faded grey "ghost" lines behind the current line |     number (0 - 6 inclusive, default: `0`)     |
 
 ⚠ **For `custom_title` please make sure that you are using %20 for spaces**
 
@@ -136,14 +134,14 @@ Add `&ghosts=N` to overlay the previous `N` contribution windows as faded grey "
 <details>
 <summary><b>Step-by-step instructions for deploying to Replit (from UI)</b></summary>
 
-#### Follow the steps
+### Follow the steps
 
-1. Sign in to Replit or create a new account at https://replit.com
+1. Sign in to Replit or create a new account at [replit.com](https://replit.com)
 2. Click the Deploy button below
 
- <a href="https://repl.it/github/fini-net/github-readme-activity-graph">
-   <img alt="Run on Repl.it" src="https://repl.it/badge/github/fini-net/github-readme-activity-graph" style="height: 40px; width: 190px;" />
- </a>
+   <a href="https://repl.it/github/fini-net/github-readme-activity-graph">
+     <img alt="Run on Repl.it" src="https://repl.it/badge/github/fini-net/github-readme-activity-graph" style="height: 40px; width: 190px;" />
+   </a>
 
 3. On the page that comes up, choose language as `Node.js` and then click `Import from GitHub` Button
 
@@ -158,7 +156,7 @@ Add `&ghosts=N` to overlay the previous `N` contribution windows as faded grey "
 7. Click the green `RUN` button on top, the console will run and at last the url will shows on the right
 8. Now just add the following to your profile readme and you're good to go
 
-```
+```md
 ![Github Activity Graph](<url from step 5>/graph?username=<username>)
 ```
 
@@ -169,27 +167,27 @@ Add `&ghosts=N` to overlay the previous `N` contribution windows as faded grey "
 <details>
 <summary><b>Step-by-step instructions for deploying to Vercel (from UI)</b></summary>
 
-#### First Method
+### First Method
 
-1.  Go to [vercel.com](https://vercel.com/).
-2.  Click on `Log in`.
+1. Go to [vercel.com](https://vercel.com/).
+2. Click on `Log in`.
     ![image](https://user-images.githubusercontent.com/3431285/235332307-a98adccf-ac8e-4c05-8fae-b14e7d0b81e8.png)
-3.  Sign in with GitHub by pressing `Continue with GitHub`.
+3. Sign in with GitHub by pressing `Continue with GitHub`.
     ![image](https://user-images.githubusercontent.com/3431285/235332299-70f52a0f-ffb9-4070-ae85-a4646a2bb1bf.png)
-4.  Sign in to GitHub and allow access to all repositories if prompted.
-5.  Fork this repo.
-6.  Go back to your [Vercel dashboard](https://vercel.com/dashboard).
-7.  To import a project, click the `Add New...` button and select the `Project` option.
+4. Sign in to GitHub and allow access to all repositories if prompted.
+5. Fork this repo.
+6. Go back to your [Vercel dashboard](https://vercel.com/dashboard).
+7. To import a project, click the `Add New...` button and select the `Project` option.
     ![image](https://user-images.githubusercontent.com/3431285/235332320-d80e62c9-a7d9-45f3-8bef-b8950c4c9093.png)
-8.  Click the `Continue with GitHub` button, search for the required Git Repository and import it by clicking the `Import` button.
+8. Click the `Continue with GitHub` button, search for the required Git Repository and import it by clicking the `Import` button.
     ![image](https://user-images.githubusercontent.com/3431285/235332373-3f28309c-d70b-490e-aa40-4d55ad429d5a.png)
-9.  Create a personal access token (PAT) [here](https://github.com/settings/tokens/new) and enable the `repo` permissions (this allows access to see private repo stats).
+9. Create a [personal access token (PAT)](https://github.com/settings/tokens/new) and enable the `repo` permissions (this allows access to see private repo stats).
     ![image](https://user-images.githubusercontent.com/3431285/235332420-df83a424-009b-4f69-bbb2-54e807bff701.png)
 10. Add the PAT as an environment variable named `TOKEN`.
     ![image](https://user-images.githubusercontent.com/3431285/235332471-6915abf8-04fe-4f5e-b734-191388a77140.png)
 11. Click deploy, and you're good to go. See your domains to use the API!
 
-#### Second Method
+### Second Method
 
 Alternatively, click the button below and follow the instructions.
 
@@ -204,7 +202,7 @@ After the deployment is complete:
 3. Go to `Deployments` tab and redeploy the project.
    ![image](https://user-images.githubusercontent.com/3431285/235332761-1d3ae9c5-0138-447f-a41a-601c73ef3104.png)
 
-#### Finally
+### Finally
 
 Now just add the following to your profile readme and you're good to go.
 
@@ -215,6 +213,9 @@ Now just add the following to your profile readme and you're good to go.
 </details>
 
 ## Self-hosting on DigitalOcean App Platform
+
+<details>
+<summary><b>Step-by-step instructions for self-hosting on DigitalOcean App Platform</b></summary>
 
 This fork ships a [Dockerfile](./Dockerfile) and an [App Platform spec](./.do/app.yaml) so the service can run as a container on DigitalOcean (or any other container host — podman, k8s, fly.io, etc.) instead of depending on the upstream Vercel deployment. The upstream deployment is currently returning HTTP 402 because the maintainer's account is billing-locked ([Ashutosh00710#257](https://github.com/Ashutosh00710/github-readme-activity-graph/issues/257), [Ashutosh00710#259](https://github.com/Ashutosh00710/github-readme-activity-graph/issues/259)). See [chicks-net/www-chicks-net#371](https://github.com/chicks-net/www-chicks-net/issues/371) for the full rationale.
 
@@ -272,6 +273,8 @@ then add a CNAME on the chicks.net side pointing at the `.ondigitalocean.app` ho
 - **Spec change:** `doctl apps update "$APP_ID" --spec .do/app.yaml --set-env TOKEN=<your-pat>`. ⚠ Always pass `--set-env TOKEN=...` when updating from the spec — the checked-in spec keeps `TOKEN`'s value empty (to keep the secret out of git), so omitting the flag resets the secret and breaks `/graph` (it returns the "Can't fetch" error-graph SVG) until `TOKEN` is set again. Alternatively, update the spec via the dashboard, which preserves existing secrets.
 - **Spec validation in CI:** the [Validate App Spec](./.github/workflows/validate-app-spec.yml) workflow checks `.do/app.yaml` on PRs. Without a `DIGITALOCEAN_ACCESS_TOKEN` repo secret it falls back to a YAML syntax check; with the secret it runs `doctl apps spec validate`.
 
+</details>
+
 ## Contributing
 
 Please read through our [contributing guidelines](./CONTRIBUTING.md). Directions are included for opening issues, coding standards, and notes on development.
@@ -282,244 +285,33 @@ This project is a fork of [Ashutosh00710/github-readme-activity-graph](https://g
 
 ## Upstream Core Team 💻
 
-<table>
-    <tr>
-        <td align="center">
-        <a href="http://github.com/Ashutosh00710">
-            <img src="https://avatars.githubusercontent.com/u/42907572?s=460&u=3c5c03fdddeec2483819b845bd549616d48b71e5&v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Ashutosh Dwivedi</b></sub>
-        </a>
-        <br />
-        <a href="#projectManagement" title="Project Management">📆</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=ashutosh00710" title="Code">💻</a>
-        <a href="#documentation" title="Documentation">📖</a>
-        <a href="#ideas" title="Ideas & Planning">🤔</a>
-        <a href="#testing" title="Testing">⚠</a>
-    </td>
-    <td align="center">
-        <a href="http://github.com/kshitij978">
-            <img src="https://avatars.githubusercontent.com/u/42491256?s=460&u=db0c5e26632c9f4917db50e714cd7552c1559ba8&v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Kshitij Srivastava</b></sub>
-        </a>
-        <br />
-        <a href="#projectManagement" title="Project Management">📆</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=kshitij978" title="Code">💻</a>
-        <a href="#documentation" title="Documentation">📖</a>
-        <a href="#design" title="Design">🎨</a>
-    </td>
-    </tr>
-</table>
+- [Ashutosh Dwivedi](https://github.com/Ashutosh00710) — [📆](https://allcontributors.org/en/reference/emoji-key/#contributions "Project Management") [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code") [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation") [🤔](https://allcontributors.org/en/reference/emoji-key/#contributions "Ideas & Planning") [⚠](https://allcontributors.org/en/reference/emoji-key/#contributions "Testing")
+- [Kshitij Srivastava](https://github.com/kshitij978) — [📆](https://allcontributors.org/en/reference/emoji-key/#contributions "Project Management") [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code") [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation") [🎨](https://allcontributors.org/en/reference/emoji-key/#contributions "Design")
 
 ## Upstream Contributors ✨
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/en/reference/emoji-key/)):
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center">
-        <a href="https://github.com/tintindas">
-            <img src="https://avatars.githubusercontent.com/u/47525983?s=460&u=0cedda5548e62fc342f32f89d230253cb8b9b099&v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Upamanyu Das</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=tintindas" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/DenverCoder1">
-            <img src="https://avatars.githubusercontent.com/u/20955511?s=460&u=5bbdbfe0199b05d6ca913fb799236c8beedcd192&v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Jonah Lawrence</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=DenverCoder1" title="Code">💻</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=DenverCoder1" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/MilindModi">
-            <img src="https://avatars.githubusercontent.com/u/28483876?s=460&v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Milind Modi</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=MilindModi" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Vaibhav-afk">
-            <img src="https://avatars.githubusercontent.com/u/67143938?s=400&u=96dcbfcff0afcd5597a904181bc4cc309a4b22fa&v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Vaibhav</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=Vaibhav-afk" title="Code">💻</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=Vaibhav-afk" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/jgphilpott">
-            <img src="https://avatars.githubusercontent.com/u/4128208?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Jacob Philpott</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=jgphilpott" title="Code">💻</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=jgphilpott" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/SonuKumar81800">
-            <img src="https://avatars.githubusercontent.com/u/45717030?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Sonu Kumar</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=SonuKumar81800" title="Style">🎨</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=SonuKumar81800" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/andinoriel">
-            <img src="https://avatars.githubusercontent.com/u/36269798?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Mykola Symon</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=andinoriel" title="Code">💻</a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-        <a href="https://github.com/sreyan-ghosh">
-            <img src="https://avatars.githubusercontent.com/u/60854658?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Sreyan Ghosh</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=sreyan-ghosh" title="Style">🎨</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Anant-mishra1729">
-            <img src="https://avatars.githubusercontent.com/u/84588156?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Anant Mishra</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=Anant-mishra1729" title="Style">🎨</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/SKewLinez">
-            <img src="https://avatars.githubusercontent.com/u/37243931?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Skyler</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=SKewLinez" title="Style">🎨</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/eliely">
-            <img src="https://avatars.githubusercontent.com/u/16717633?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Iryna Mykoliuk</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=eliely" title="Style">🎨</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/DalpatRathore">
-            <img src="https://avatars.githubusercontent.com/u/69510006?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Dalpat Rathore</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=DalpatRathore" title="Style">🎨</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=DalpatRathore" title="Code">💻</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/fishmandev">
-            <img src="https://avatars.githubusercontent.com/u/29619660?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>Dmitriy Fishman</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=fishmandev" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/MagicLike">
-            <img src="https://avatars.githubusercontent.com/u/82117109?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>MagicLike</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=MagicLike" title="Style">🎨</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=MagicLike" title="Code">💻</a>
-    </td>
-  </tr>
-  </tr>
-    <td align="center">
-        <a href="https://github.com/OnkarRuikar">
-            <img src="https://avatars.githubusercontent.com/u/87750369?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>OnkarRuikar</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=OnkarRuikar" title="Code">💻</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/valetzx">
-            <img src="https://avatars.githubusercontent.com/u/45054400?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>valetzx</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=valetzx" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/tranthaituananh">
-            <img src="https://avatars.githubusercontent.com/u/77098480?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>tranthaituananh</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=tranthaituananh" title="Style">🎨</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=tranthaituananh" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/polekstulod">
-            <img src="https://avatars.githubusercontent.com/u/38794173?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>polekstulod</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=polekstulod" title="Documentation">📖</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/jmloudis">
-            <img src="https://avatars.githubusercontent.com/u/70452698?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>jmloudis</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/pulls?q=author%3Ajmloudis+" title="Code">💻</a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/fabianocouto">
-            <img src="https://avatars.githubusercontent.com/u/3431285?v=4" width="100px;" alt=""/>
-            <br />
-            <sub><b>fabianocouto</b></sub>
-        </a>
-        <br />
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=fabianocouto" title="Code">💻</a>
-        <a href="https://github.com/Ashutosh00710/github-readme-activity-graph/commits?author=fabianocouto" title="Documentation">📖</a>
-    </td>
-  </tr>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+- [Upamanyu Das](https://github.com/tintindas) — [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [Jonah Lawrence](https://github.com/DenverCoder1) — [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code") [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [Milind Modi](https://github.com/MilindModi) — [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [Vaibhav](https://github.com/Vaibhav-afk) — [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code") [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [Jacob Philpott](https://github.com/jgphilpott) — [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code") [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [Sonu Kumar](https://github.com/SonuKumar81800) — [🎨](https://allcontributors.org/en/reference/emoji-key/#contributions "Design") [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [Mykola Symon](https://github.com/andinoriel) — [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code")
+- [Sreyan Ghosh](https://github.com/sreyan-ghosh) — [🎨](https://allcontributors.org/en/reference/emoji-key/#contributions "Design")
+- [Anant Mishra](https://github.com/Anant-mishra1729) — [🎨](https://allcontributors.org/en/reference/emoji-key/#contributions "Design")
+- [Skyler](https://github.com/SKewLinez) — [🎨](https://allcontributors.org/en/reference/emoji-key/#contributions "Design")
+- [Iryna Mykoliuk](https://github.com/eliely) — [🎨](https://allcontributors.org/en/reference/emoji-key/#contributions "Design")
+- [Dalpat Rathore](https://github.com/DalpatRathore) — [🎨](https://allcontributors.org/en/reference/emoji-key/#contributions "Design") [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code")
+- [Dmitriy Fishman](https://github.com/fishmandev) — [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [MagicLike](https://github.com/MagicLike) — [🎨](https://allcontributors.org/en/reference/emoji-key/#contributions "Design") [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code")
+- [OnkarRuikar](https://github.com/OnkarRuikar) — [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code")
+- [valetzx](https://github.com/valetzx) — [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [tranthaituananh](https://github.com/tranthaituananh) — [🎨](https://allcontributors.org/en/reference/emoji-key/#contributions "Design") [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [polekstulod](https://github.com/polekstulod) — [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
+- [jmloudis](https://github.com/jmloudis) — [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code")
+- [fabianocouto](https://github.com/fabianocouto) — [💻](https://allcontributors.org/en/reference/emoji-key/#contributions "Code") [📖](https://allcontributors.org/en/reference/emoji-key/#contributions "Documentation")
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
@@ -529,11 +321,10 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 | :----------------: | :-------------: | :---------------------------------------: |
 | Graph Construction | **CHARTIST.JS** | <https://github.com/gionkunz/chartist-js> |
 
-</br>
-<hr/>
+---
 
 ## Upstream Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Ashutosh00710/github-readme-activity-graph&type=Timeline)](https://star-history.com/#Ashutosh00710/github-readme-activity-graph&Timeline)
 
-### Made with ❤ and TypeScript <img src="https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" width="25">
+### Made with ❤ and TypeScript <img src="https://www.vectorlogo.zone/logos/typescriptlang/typescriptlang-icon.svg" width="25" alt="TypeScript">

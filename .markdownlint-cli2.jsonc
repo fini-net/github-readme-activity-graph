@@ -1,0 +1,36 @@
+{
+  // Markdownlint configuration for this repo (used by markdownlint-cli2 and
+  // the VS Code markdownlint extension). Consolidates the rule settings that
+  // used to live in .markdownlint.yml, which this file's format otherwise
+  // shadows, into one place.
+  "config": {
+    // Enable all default rules
+    "default": true,
+    // MD013 - Line length: disabled (no line length limit)
+    "MD013": false,
+    // MD041 - First line heading: disabled (files need not start with a top-level heading)
+    "MD041": false,
+    // MD042 - No empty links: disabled
+    "MD042": false,
+    // MD004 - Unordered list style: enforce dashes (-) instead of asterisks or plus signs
+    "MD004": { "style": "dash" },
+    // MD010 - Hard tabs: allow hard tabs inside code blocks
+    "MD010": { "code_blocks": false },
+    // MD033 - Inline HTML: allow the elements a GitHub README legitimately needs
+    // (foldable deploy sections, sized images, centered logo, deploy badge);
+    // any other inline HTML element still gets flagged
+    "MD033": {
+      "allowed_elements": [
+        "a",       // Replit deploy badge link
+        "b",       // bold fold titles in <summary> lines
+        "details", // foldable deploy sections (Replit, Vercel, DigitalOcean)
+        "img",     // logo, theme previews, deploy badges, TypeScript icon
+        "p",       // centered logo block
+        "summary"  // foldable deploy sections
+      ]
+    }
+  },
+  // GitHub issue templates are filled in via the web form, so lint hygiene
+  // there isn't worth enforcing. (The pull request template stays linted.)
+  "ignores": [".github/ISSUE_TEMPLATE/**"]
+}

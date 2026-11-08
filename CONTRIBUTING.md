@@ -60,7 +60,7 @@ Our aim is to **keep it simple** for the developers to contribute to this projec
 
 ### Folder Structure
 
-```
+```text
 
 ├── ...
 ├── .github                          #conatins issues and pull request templates
